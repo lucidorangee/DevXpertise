@@ -1,0 +1,39 @@
+{
+  "name": "devxpertise",
+  "version": "1.0.0",
+  "description": "A web application that connects you to various developers across the globe",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lucidorangee/DevXpertise.git"
+  },
+  "keywords": [
+    "web",
+    "application",
+    "developers"
+  ],
+  "author": "Jihoo Ahn",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/lucidorangee/DevXpertise/issues"
+  },
+  "homepage": "https://github.com/lucidorangee/DevXpertise#readme",
+  "devDependencies": {
+    "jest": "^29.6.2"
+  },
+  "dependencies": {
+    "axios": "^1.4.0",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "express-session": "^1.17.3",
+    "grommet": "^2.33.1",
+    "mongodb": "^5.7.0",
+    "mongoose": "^7.4.2",
+    "passport": "^0.6.0",
+    "passport-google-oauth20": "^2.0.0",
+    "react": "^18.2.0"
+  }
+}
