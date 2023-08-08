@@ -13,9 +13,12 @@ const session = require('express-session');
 const connectToDB = require('../server/db');
 require('../server/passport-config');
 
-
 // Create an Express app
 const app = express();
+
+// Set up Ports
+const cors = require('cors');
+app.use(cors());
 
 // Middleware setup (body-parser and others if needed)
 app.use(express.json());
@@ -33,6 +36,17 @@ app.use(passport.initialize());
 app.use(passport.session());
 connectToDB();
 
+// Testing Purpose
+const sampleData = [
+    { id: 1, title: 'Sample Item 1' },
+    { id: 2, title: 'Sample Item 2' },
+    { id: 3, title: 'Sample Item 3' },
+  ];
+
+app.get('/api/data', (req, res) => {
+    res.json(sampleData);
+});
+
 // Passport-google-oauth20
 app.get(
     '/auth/google',
@@ -40,7 +54,7 @@ app.get(
 );
 
 app.get(
-    'auth/google/callback',
+    '/auth/google/callback',
     passport.authenticate('google', {failureRedirect: '/'}),
     (req, res) => {
         res.redirect('/dashboard');

@@ -16,9 +16,10 @@ The purpose of this application is for aspiring developers to have projects wher
 - Testing: JTest and Supertest
 - HTTP Request Library: Axios
 - Environment Variable Loading Module: Dotenv
+- Routing: react-router-dom
 
 ## Pages
-- Main Page
+- Home Page
 - Login Page 
 - Account Page
 - Forum Page / Post, Query
