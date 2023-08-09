@@ -8,10 +8,18 @@ passport.use( new GoogleStrategy(
         clientSecret: process.env.GOOGLE_CLIENT_SECRET,
         callbackURL: '/auth/google/callback',
     },
-    function (accessToken, refreshToken, profile, cb){
-        User.findOrCreate({ googleId: profile.id }, function (err, user){
-            return cb(err, user);
-        })
+    async function (accessToken, refreshToken, profile, cb){
+        const userData = {
+            googleId: profile.id,
+            displayName: profile.displayName,
+        };
+
+        try {
+            const user = await User.findOrCreate({ googleId: profile.id }, userData);
+            return cb(null, user);
+        } catch (error) {
+            return cb(error);
+        }
     }
 ));
 

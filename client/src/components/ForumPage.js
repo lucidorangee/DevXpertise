@@ -9,7 +9,7 @@ function ForumPage() {
     const [searchQuery, setSearchQuery] = useState('');
 
     useEffect(() => {
-        axios.get('https://localhost:5000/api/posts')
+        axios.get('http://localhost:5000/api/posts')
             .then(response => setPosts(response.data))
             .catch(error => console.error(error));
     }, []);

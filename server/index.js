@@ -38,12 +38,12 @@ connectToDB();
 
 // Testing Purpose
 const sampleData = [
-    { id: 1, title: 'Sample Item 1' },
-    { id: 2, title: 'Sample Item 2' },
-    { id: 3, title: 'Sample Item 3' },
+    { id: 1, title: 'Sample Item 1' , author: 'A1', date: 'W', tags: []},
+    { id: 2, title: 'Sample Item 2' , author: 'A2', date: 'A', tags: []},
+    { id: 3, title: 'Sample Item 3' , author: 'A3', date: 'C', tags: ["333"]},
   ];
 
-app.get('/api/data', (req, res) => {
+app.get('/api/posts', (req, res) => {
     res.json(sampleData);
 });
 
@@ -57,7 +57,7 @@ app.get(
     '/auth/google/callback',
     passport.authenticate('google', {failureRedirect: '/'}),
     (req, res) => {
-        res.redirect('/dashboard');
+        res.redirect(`http://localhost:3000/?message=loggedin&displayName=${req.user.displayName}`); //
     }
 )
 
