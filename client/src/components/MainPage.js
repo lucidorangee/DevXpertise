@@ -17,11 +17,12 @@ function MainPage() {
     return (
         <Grommet>
         <Box pad="medium" align="center">
+        i
             <Heading level="1">Welcome to the Main Page!</Heading>
             <Tabs activeIndex={activeTab} onActive={handleTabChange}>
                 <Tab title="Tab 1">
                     <Box pad="medium">
-                        <Link to="/login">Go to Login Page</Link>
+                        <Link to="/login" pad="medium">Go to Login Page</Link>
                     </Box>
                     
                 </Tab>
