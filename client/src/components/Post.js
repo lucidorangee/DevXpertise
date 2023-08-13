@@ -4,10 +4,20 @@ import { Box, Text } from 'grommet';
 function Post({id, title, author, date, tags }) {
     const tagsToDisplay = Array.isArray(tags) ? tags.join(', ') : '';
 
-    console.log(id, title, author, date, tags);
+    const handlePostClick = () => {
+        // Handle the box click event
+        console.log('Box clicked');
+    };
 
     return (
-        <Box border="all" pad="medium" margin="small">
+        <Box 
+        border="all" 
+        pad="medium" 
+        margin="small"
+        background="light-2"
+        hoverIndicator="dark-4"
+        onClick={handlePostClick}
+        >
             <Text size="xlarge" weight="bold">{title}</Text>
             <Box direction="row" justify="between">
                 <Text size="small">{author} - {date}</Text>
