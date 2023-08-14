@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { Box, Text } from 'grommet';
 
 function Post({id, title, author, date, tags }) {
-    const navigate = useNavigate()
+    const navigate = useNavigate();
 
     const tagsToDisplay = Array.isArray(tags) ? tags.join(', ') : '';
 

@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
+const Post = require('./models/Post');
 
 // Load environment variables from .env file
 dotenv.config();

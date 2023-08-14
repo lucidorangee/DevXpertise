@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Grommet, Box, Heading, Grid, Text } from 'grommet';
 import { FormSearch } from 'grommet-icons';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import SearchBar from './SearchBar';
 import PostList from './PostList';
@@ -8,10 +9,12 @@ import PostList from './PostList';
 function ForumPage() {
     const [posts, setPosts] = useState([]);
     const [searchQuery, setSearchQuery] = useState('');
+    const navigate = useNavigate();
 
-    const handlePostClick = () => {
+    const handleCreatePostClick = () => {
       // Handle the box click event
-      console.log('Box clicked');
+      
+      navigate(`/postcreate`);
     };
 
     useEffect(() => {
@@ -49,7 +52,7 @@ function ForumPage() {
                 margin="small"
                 background="light-2"
                 hoverIndicator="dark-4"
-                onClick={handlePostClick}
+                onClick={handleCreatePostClick}
                 >
                     <Text size="xlarge" weight="bold">Create Post</Text>
                 </Box>

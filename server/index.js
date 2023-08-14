@@ -1,6 +1,8 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const passport = require('passport');
+const bodyParser = require('body-parser'); 
+const Post = require('../server/models/Post');
 
 // Load environment variables from .env file
 const dotenv = require('dotenv');
@@ -44,7 +46,35 @@ const sampleData = [
   ];
 
 app.get('/api/posts', (req, res) => {
-    res.json(sampleData);
+    Post.find()
+        .then((posts) => {
+            res.json(posts);
+        })
+        .catch((error) => {
+            console.error(error);
+            res.status(500).json({ error: 'Error retrieving posts' });
+        });
+});
+
+app.post('/api/createpost', bodyParser.json(), (req, res) => {
+    // Create a new post instance based on the request body
+    const newPost = new Post({
+        title: req.body.title,
+        author: req.body.author,
+        date: req.body.date,
+        tags: req.body.tags,
+        thread: req.body.thread,
+    });
+  
+    // Save the new post to the database
+    newPost.save((err) => {
+        if (err) {
+            console.error(err);
+            res.status(500).json({ error: 'Error creating a new post' });
+        } else {
+            res.json({ message: 'Post created successfully' });
+        }
+    });
 });
 
 app.get('/api/posts/:id', (req, res) => {

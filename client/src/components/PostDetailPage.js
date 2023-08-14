@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { Grommet, Box, Heading, FormField } from 'grommet';
+import { Grommet, Box, Heading } from 'grommet';
 import axios from 'axios';
 
 function ForumDetailPage() {
