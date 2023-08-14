@@ -47,6 +47,17 @@ app.get('/api/posts', (req, res) => {
     res.json(sampleData);
 });
 
+app.get('/api/posts/:id', (req, res) => {
+    const postId = parseInt(req.params.id);
+    const post = sampleData.find(post => post.id === postId);
+
+    if(!post){
+        return res.status(404).json({error: 'Post not found '});
+    }
+
+    res.json(post);
+});
+
 // Passport-google-oauth20
 app.get(
     '/auth/google',

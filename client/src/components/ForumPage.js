@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Grommet, Box, Heading, Grid } from 'grommet';
+import { Grommet, Box, Heading, Grid, Text } from 'grommet';
 import { FormSearch } from 'grommet-icons';
 import axios from 'axios';
 import SearchBar from './SearchBar';
@@ -8,6 +8,11 @@ import PostList from './PostList';
 function ForumPage() {
     const [posts, setPosts] = useState([]);
     const [searchQuery, setSearchQuery] = useState('');
+
+    const handlePostClick = () => {
+      // Handle the box click event
+      console.log('Box clicked');
+    };
 
     useEffect(() => {
         axios.get('http://localhost:5000/api/posts')
@@ -38,6 +43,16 @@ function ForumPage() {
               </Box>
               <Box gridArea="nav" background="light-5" />
               <Box gridArea="main" background="light-2" >
+                <Box 
+                border="all" 
+                pad="medium" 
+                margin="small"
+                background="light-2"
+                hoverIndicator="dark-4"
+                onClick={handlePostClick}
+                >
+                    <Text size="xlarge" weight="bold">Create Post</Text>
+                </Box>
                 <PostList posts={posts} searchQuery={searchQuery} />
                 
               </Box>
