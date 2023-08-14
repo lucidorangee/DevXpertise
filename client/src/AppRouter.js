@@ -4,6 +4,7 @@ import MainPage from './components/MainPage';
 import LoginPage from './components/LoginPage';
 import ForumPage from './components/ForumPage';
 import ForumCreatePage from './components/ForumCreatePage';
+import ForumDetailPage from './components/PostDetailPage';
 
 function AppRouter() {
     return (
@@ -12,6 +13,7 @@ function AppRouter() {
             <Route path="/" element={<MainPage />}></Route>
             <Route path="/login" element={<LoginPage />}></Route>
             <Route path="/forum" element={<ForumPage />}></Route>
+            <Route path="/post/:id" element={<ForumDetailPage />}></Route>
             <Route path="/forumc" element={<ForumCreatePage />}></Route>
             </Routes>
         </Router>
