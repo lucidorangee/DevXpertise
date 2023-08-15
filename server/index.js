@@ -38,13 +38,14 @@ app.use(passport.initialize());
 app.use(passport.session());
 connectToDB();
 
-// Testing Purpose
+// Testing Purpose - No longer used.
 const sampleData = [
     { id: 1, title: 'Sample Item 1' , author: 'A1', date: 'W', tags: []},
     { id: 2, title: 'Sample Item 2' , author: 'A2', date: 'A', tags: []},
     { id: 3, title: 'Sample Item 3' , author: 'A3', date: 'C', tags: ["333"]},
   ];
 
+// Actual Data
 app.get('/api/posts', (req, res) => {
     Post.find()
         .then((posts) => {
