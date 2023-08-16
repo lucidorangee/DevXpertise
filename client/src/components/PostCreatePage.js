@@ -44,7 +44,7 @@ function PostCreatePage() {
         <Grommet>
           <Box pad="medium" align="center">
             <Heading level="1">Create a post!</Heading>
-            <FormField>Example</FormField>
+            <FormField>Title</FormField>
             <Box 
             border="all" 
             pad="medium" 
