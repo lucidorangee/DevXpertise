@@ -13,7 +13,7 @@ function AppRouter() {
             <Route path="/" element={<MainPage />}></Route>
             <Route path="/login" element={<LoginPage />}></Route>
             <Route path="/forum" element={<ForumPage />}></Route>
-            <Route path="/post/:id" element={<ForumDetailPage />}></Route>
+            <Route path="/post/:postId" element={<ForumDetailPage />}></Route>
             <Route path="/postcreate" element={<ForumCreatePage />}></Route>
             </Routes>
         </Router>

@@ -13,7 +13,7 @@ function PostList({ posts, searchQuery }) {
         <Box>
             {filteredPosts.map((post) => (
                 <Post
-                    id={post.id}
+                    postId={post._id}
                     title={post.title}
                     author={post.author}
                     date={post.date}

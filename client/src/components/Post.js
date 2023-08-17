@@ -2,14 +2,30 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Box, Text } from 'grommet';
 
-function Post({id, title, author, date, tags }) {
+function Post({postId, title, author, date, tags }) {
     const navigate = useNavigate();
 
     const tagsToDisplay = Array.isArray(tags) ? tags.join(', ') : '';
 
+    // Function to delete all posts
+    const deleteAllPosts = () => {
+        fetch('http://localhost:5000/api/posts', {
+        method: 'DELETE',
+        })
+        .then((response) => response.json())
+        .then((data) => {
+            console.log(data.message); // Message from the server
+            // Perform any additional actions after deletion
+        })
+        .catch((error) => {
+            console.error(error);
+        });
+    };
+
     const handlePostClick = () => {
+        console.log(postId);
         // Handle the box click event
-        navigate(`/post/${id}`);
+        navigate(`/post/${postId}`);
     };
 
     return (
@@ -23,7 +39,7 @@ function Post({id, title, author, date, tags }) {
         >
             <Text size="xlarge" weight="bold">{title}</Text>
             <Box direction="row" justify="between">
-                <Text size="small">{author} - {date}</Text>
+                <Text size="small">{postId} : {author} - {date}</Text>
             </Box>
             <Text size="small" color="brand">{tagsToDisplay}</Text>
         </Box>

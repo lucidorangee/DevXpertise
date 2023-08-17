@@ -4,14 +4,16 @@ import { Grommet, Box, Heading } from 'grommet';
 import axios from 'axios';
 
 function ForumDetailPage() {
-    const { id } = useParams();
+    const { postId } = useParams();
     const [post, setPost] = useState(null);
 
+    console.log("GOING TO ", postId);
+
     useEffect(() => {
-        axios.get(`http://localhost:5000/api/posts/${id}`)
+        axios.get(`http://localhost:5000/api/post/${postId}`)
             .then(response => setPost(response.data))
             .catch(error => console.error(error));
-    }, [id]);
+    }, [postId]);
 
     if (!post)
     {
@@ -21,7 +23,7 @@ function ForumDetailPage() {
     return (
         <Grommet>
           <Box pad="medium" align="center">
-            <Heading level="2">{post.id} - {post.title}</Heading>
+            <Heading level="2">{post.postId} - {post.title}</Heading>
             <p>{post.author}</p>
           </Box>
         </Grommet>

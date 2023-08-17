@@ -18,7 +18,7 @@ function PostCreatePage() {
         comments: ['hi'],
       };
       
-      fetch('/api/createpost', {
+      fetch('http://localhost:5000/api/createpost', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -35,7 +35,7 @@ function PostCreatePage() {
     };
 
     useEffect(() => {
-        axios.get('http://localhost:5000/api/posts')
+        axios.get('http://localhost:5000/api/post')
             .then(response => setPosts(response.data))
             .catch(error => console.error(error));
     }, []);

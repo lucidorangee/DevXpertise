@@ -57,37 +57,58 @@ app.get('/api/posts', (req, res) => {
         });
 });
 
-app.post('/api/createpost', bodyParser.json(), (req, res) => {
-    // Create a new post instance based on the request body
-    const newPost = new Post({
-        title: req.body.title,
-        author: req.body.author,
-        date: req.body.date,
-        tags: req.body.tags,
-        thread: req.body.thread,
-    });
-  
-    // Save the new post to the database
-    newPost.save((err) => {
-        if (err) {
-            console.error(err);
-            res.status(500).json({ error: 'Error creating a new post' });
-        } else {
-            res.json({ message: 'Post created successfully' });
-        }
-    });
-});
-
-app.get('/api/posts/:id', (req, res) => {
-    const postId = parseInt(req.params.id);
-    const post = sampleData.find(post => post.id === postId);
-
-    if(!post){
-        return res.status(404).json({error: 'Post not found '});
+//Delete
+app.delete('/api/posts', async (req, res) => {
+    try {
+    // Delete all posts
+    await Post.deleteMany({});
+    res.json({ message: 'All posts deleted' });
+    } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Error deleting posts' });
     }
-
-    res.json(post);
 });
+
+app.post('/api/createpost', bodyParser.json(), async (req, res) => {
+    try{
+        // Create a new post instance based on the request body
+        const newPost = new Post({
+            title: req.body.title,
+            author: req.body.author,
+            date: req.body.date,
+            tags: req.body.tags,
+            thread: req.body.thread,
+        });
+
+        const savedPost = await newPost.save();
+        console.log("ID IS ", savedPost._id);
+
+        res.json({
+            message: 'Post created successfully' ,
+            postId: savedPost._id,
+        });
+    } catch (error) {
+        console.error(err);
+        res.status(500).json({ error: 'Error creating a new post' });
+    }
+});
+
+app.get('/api/post/:postId', async (req, res) => {
+    const postId = req.params.postId;
+    try {
+        const post = await Post.findOne({ _id: postId }); 
+
+        if (!post) {
+            return res.status(404).json({ error: 'Post not found' });
+        }
+
+        res.json(post);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Internal server error' });
+    }
+});
+
 
 // Passport-google-oauth20
 app.get(
