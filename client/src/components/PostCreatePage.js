@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Grommet, Box, Heading, FormField, Text } from 'grommet';
+import { Grommet, Box, Heading, FormField, Text, TextInput } from 'grommet';
 import axios from 'axios';
 import SearchBar from './SearchBar';
 import PostList from './PostList';
@@ -7,6 +7,10 @@ import PostList from './PostList';
 function PostCreatePage() {
     const [posts, setPosts] = useState([]);
     const [searchQuery, setSearchQuery] = useState('');
+
+    // Post Details
+    const [title, setTitle] = React.useState('');
+    const [tags, setTags] = React.useState('');
 
     const handleSubmitClick = () => {
       // Handle the box click event
@@ -44,7 +48,11 @@ function PostCreatePage() {
         <Grommet>
           <Box pad="medium" align="center">
             <Heading level="1">Create a post!</Heading>
-            <FormField>Title</FormField>
+            <TextInput
+              placeholder="Title"
+                value={title}
+                onChange={event => setTitle(event.target.value)}
+              />
             <Box 
             border="all" 
             pad="medium" 
