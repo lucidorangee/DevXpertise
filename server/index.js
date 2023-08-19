@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const passport = require('passport');
 const bodyParser = require('body-parser'); 
 const Post = require('../server/models/Post');
+const User = require('../server/models/User');
 
 // Load environment variables from .env file
 const dotenv = require('dotenv');
@@ -60,12 +61,12 @@ app.get('/api/posts', (req, res) => {
 //Delete
 app.delete('/api/posts', async (req, res) => {
     try {
-    // Delete all posts
-    await Post.deleteMany({});
-    res.json({ message: 'All posts deleted' });
+        // Delete all posts
+        await Post.deleteMany({});
+        res.json({ message: 'All posts deleted' });
     } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: 'Error deleting posts' });
+        console.error(error);
+        res.status(500).json({ error: 'Error deleting posts' });
     }
 });
 
@@ -120,9 +121,23 @@ app.get(
     '/auth/google/callback',
     passport.authenticate('google', {failureRedirect: '/'}),
     (req, res) => {
-        res.redirect(`http://localhost:3000/?message=loggedin&displayName=${req.user.displayName}`); //
+        const { id, displayName } = req.user;
+
+        const newUser = new User({
+            googleId: id,
+            displayName: displayName,
+        });
+
+        newUser.save()
+            .then(() => {
+                res.redirect('http://localhost:3000/');
+            })
+            .catch(err => {
+                console.error(err);
+                res.redirect('http://localhost:3000/');
+            });
     }
-)
+);
 
 //Check if the user is authenticated
 const ensureAuthenticated = (req, res, next) => {

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Grommet, Box, Heading, FormField, Text, TextInput } from 'grommet';
+import { Grommet, Box, Heading, FormField, Text, TextInput, SelectMultiple } from 'grommet';
 import axios from 'axios';
 import SearchBar from './SearchBar';
 import PostList from './PostList';
@@ -10,16 +10,16 @@ function PostCreatePage() {
 
     // Post Details
     const [title, setTitle] = React.useState('');
-    const [tags, setTags] = React.useState('');
+    const [tags, setTags] = React.useState([]);
 
     const handleSubmitClick = () => {
       // Handle the box click event
       const newPostData = {
-        title: 'New Post Title',
+        title: title,
         author: 'John Doe',
         date: '2023-08-10',
-        tags: ['tag1', 'tag2'],
-        comments: ['hi'],
+        tags: tags,
+        comments: [],
       };
       
       fetch('http://localhost:5000/api/createpost', {
@@ -53,6 +53,11 @@ function PostCreatePage() {
                 value={title}
                 onChange={event => setTitle(event.target.value)}
               />
+            <SelectMultiple 
+              placeholder="Select Tags"
+              options={['C','C++','Python','Javascript']}
+              onChange={event => setTags(event.value)}
+            />
             <Box 
             border="all" 
             pad="medium" 
