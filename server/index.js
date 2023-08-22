@@ -139,6 +139,22 @@ app.get(
     }
 );
 
+app.get('/api/currentuser', async (req, res) => {
+    const postId = req.params.user;
+    try {
+        const post = await Post.findOne({ _id: postId }); 
+
+        if (!post) {
+            return res.status(404).json({ error: 'Post not found' });
+        }
+
+        res.json(post);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Internal server error' });
+    }
+});
+
 //Check if the user is authenticated
 const ensureAuthenticated = (req, res, next) => {
     if (req.isAuthenticated()) {
