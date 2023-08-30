@@ -8,7 +8,7 @@ passport.use( new GoogleStrategy(
         clientSecret: process.env.GOOGLE_CLIENT_SECRET,
         callbackURL: '/auth/google/callback',
     },
-    async function (accessToken, refreshToken, profile, cb){
+    async function (req, accessToken, refreshToken, profile, cb){
         const userData = {
             googleId: profile.id,
             displayName: profile.displayName,

@@ -1,24 +1,33 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Grommet, Box, Heading, Tabs, Tab } from 'grommet';
 
 function MainPage() {
-    const location = useLocation();
-    const queryParams = new URLSearchParams(location.search);
-    const message = queryParams.get('message') === 'loggedin' ? 'Welcome back' : 'Not logged in';
-    const displayName = queryParams.get('displayName') || '';
-
     const [activeTab, setActiveTab] = useState(0);
+    const [user, setUser] = useState(null);
 
     const handleTabChange = index => {
         setActiveTab(index);
     };
     
+    useEffect(() => {
+        fetch('http://localhost:5000/api/getUser', {
+            method: 'GET',
+            credentials: 'include',
+        })
+            .then(response => response.json())
+            .then(data => {
+                setUser(data);
+            })
+            .catch(error => {
+                console.error(error);
+            });
+    }, []);
+
     return (
         <Grommet>
         <Box pad="medium" align="center">
-        i
-            <Heading level="1">Welcome to the Main Page!</Heading>
+            <Heading level="1">Welcome to the Main Page! {user && user.displayName}</Heading>
             <Tabs activeIndex={activeTab} onActive={handleTabChange}>
                 <Tab title="Tab 1">
                     <Box pad="medium">

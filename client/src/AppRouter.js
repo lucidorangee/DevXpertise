@@ -5,6 +5,7 @@ import LoginPage from './components/LoginPage';
 import ForumPage from './components/ForumPage';
 import ForumCreatePage from './components/PostCreatePage';
 import ForumDetailPage from './components/PostDetailPage';
+import DashboardPage from './components/DashboardPage';
 
 function AppRouter() {
     return (
@@ -15,6 +16,7 @@ function AppRouter() {
             <Route path="/forum" element={<ForumPage />}></Route>
             <Route path="/post/:postId" element={<ForumDetailPage />}></Route>
             <Route path="/postcreate" element={<ForumCreatePage />}></Route>
+            <Route path="/dashboard" element={<DashboardPage />}></Route>
             </Routes>
         </Router>
     )

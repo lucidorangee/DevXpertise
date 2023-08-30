@@ -5,23 +5,25 @@ const bodyParser = require('body-parser');
 const Post = require('../server/models/Post');
 const User = require('../server/models/User');
 
+
 // Load environment variables from .env file
 const dotenv = require('dotenv');
 
 // Load environment variables from .env file
-const result = dotenv.config();
 dotenv.config();
 
 const session = require('express-session');
 const connectToDB = require('../server/db');
-require('../server/passport-config');
 
 // Create an Express app
 const app = express();
 
 // Set up Ports
 const cors = require('cors');
-app.use(cors());
+app.use(cors({
+    origin: 'http://localhost:3000',
+    credentials: true,
+}));
 
 // Middleware setup (body-parser and others if needed)
 app.use(express.json());
@@ -33,10 +35,13 @@ app.use(
         resave: false,
         saveUninitialized: false,
     })
-)
+);
 
 app.use(passport.initialize());
 app.use(passport.session());
+
+require('../server/passport-config');
+
 connectToDB();
 
 // Testing Purpose - No longer used.
@@ -120,48 +125,48 @@ app.get(
 app.get(
     '/auth/google/callback',
     passport.authenticate('google', {failureRedirect: '/'}),
-    (req, res) => {
-        const { id, displayName } = req.user;
+    async (req, res) => {
+        const { googleId, displayName } = req.user;
 
-        const newUser = new User({
-            googleId: id,
-            displayName: displayName,
-        });
+        try {
+            const existingUser = await User.findOne({ googleId });
 
-        newUser.save()
-            .then(() => {
-                res.redirect('http://localhost:3000/');
-            })
-            .catch(err => {
-                console.error(err);
-                res.redirect('http://localhost:3000/');
-            });
+            if(existingUser) {
+                existingUser.displayName = displayName;
+                await existingUser.save();
+            } else {
+                const newUser = new User({
+                    googleId,
+                    displayName,
+                });
+                await newUser.save();
+            }
+            res.redirect('http://localhost:3000/');
+        } catch(error){
+            console.error(error);
+            res.redirect('http://localhost:3000/');
+        }
     }
 );
 
-app.get('/api/currentuser', async (req, res) => {
-    const postId = req.params.user;
-    try {
-        const post = await Post.findOne({ _id: postId }); 
-
-        if (!post) {
-            return res.status(404).json({ error: 'Post not found' });
-        }
-
-        res.json(post);
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({ error: 'Internal server error' });
-    }
-});
 
 //Check if the user is authenticated
 const ensureAuthenticated = (req, res, next) => {
     if (req.isAuthenticated()) {
         return next();
     }
-}
+    res.status(401).json({ error: 'Unauthorized, failed ensureAuthenticated' });
+};
 
+app.get('/api/getUser', (req, res) => {
+    console.log("req user is ", req.user);
+    if(req.isAuthenticated()){
+        const user = req.user;
+        res.json(user);
+    } else {
+        res.status(401).json({ message: 'Not authenticated' });
+    }
+});
 
 // Start the server
 const port = process.env.PORT || 5000;
