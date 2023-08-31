@@ -27,7 +27,7 @@ function MainPage() {
     return (
         <Grommet>
         <Box pad="medium" align="center">
-            <Heading level="1">Welcome to the Main Page! {user && user.displayName}</Heading>
+            <Heading level="1">Welcome to the Main Page! {user && user.displayName} {user && user.createdPosts}</Heading>
             <Tabs activeIndex={activeTab} onActive={handleTabChange}>
                 <Tab title="Tab 1">
                     <Box pad="medium">
